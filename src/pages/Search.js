@@ -1,15 +1,15 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react/cjs/react.development";
+import { useEffect, useState } from "react";
 import { db } from "../config/firebase";
 
 const Search = () => {
 
     const [keyword, setKeyword] = useState('');
     const [userDis, setUserDis] = useState([]);
-    const postsRef = query(collection(db, "users"), where("username", ">=", keyword), where("username", "<=", keyword+ 'uf8ff'));
-
+    
     useEffect(() => {
+        const postsRef = query(collection(db, "users"), where("username", ">=", keyword), where("username", "<=", keyword+ 'uf8ff'));
         if (keyword) {
         getDocs(postsRef)
             .then(snapshot => {
@@ -22,7 +22,8 @@ const Search = () => {
                 )));
             })
         }
-    }, [keyword])
+    }, [keyword]);
+
 
     return (
         <> 
@@ -36,7 +37,7 @@ const Search = () => {
         {userDis.map((usr, i) => (
             <div key={i} className="mx-3">
                 <Link className="flex items-center gap-3" to={`/${usr.uid}`}>
-                    <img src={`${usr.profile_pic}`} className="rounded-full w-14" alt="image-preview" referrerPolicy="no-referrer" />
+                    <img src={`${usr.profile_pic}`} className="rounded-full w-14" alt="preview-profile" referrerPolicy="no-referrer" />
                     <h1 className="font-semibold text-xl">{usr.username}</h1>
                 </Link>
             </div>

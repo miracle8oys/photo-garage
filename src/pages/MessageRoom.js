@@ -8,13 +8,13 @@ const MessageRoom = ({user}) => {
 
     const {message_id} = useParams();
     const [msg, setMsg] = useState('');
-    const msgRef = doc(db, "messages", message_id);
-    const msgDetailRef = collection(db, "messages_detail");
-    const getMsgDetail = query(collection(db, "messages_detail"), where("message_id", "==", `${message_id}`), orderBy("createdAt"));
+    
+    
     const [msgData, setMsgData] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const msgDetailRef = collection(db, "messages_detail");
         const currentTime = Timestamp.now();
         addDoc(msgDetailRef, {
             message_id,
@@ -24,6 +24,7 @@ const MessageRoom = ({user}) => {
             msg_content: msg,
             createdAt: currentTime
         }).then(() => {
+            const msgRef = doc(db, "messages", message_id);
             updateDoc(msgRef, {
                 last_msg: msg
             })
@@ -32,6 +33,7 @@ const MessageRoom = ({user}) => {
     } 
 
     useEffect(() => {
+        const getMsgDetail = query(collection(db, "messages_detail"), where("message_id", "==", `${message_id}`), orderBy("createdAt"));
         const subscribtion = onSnapshot(getMsgDetail, (snapshot) => {
             setMsgData(snapshot.docs.map(cht => (
                 {
@@ -45,14 +47,13 @@ const MessageRoom = ({user}) => {
             subscribtion();
         }
 
-    }, []);
-
+    }, [message_id]);
 
     return ( 
         <div className="min-h-[85vh] mb-20">
             {msgData.map(chat => (
                 <div key={chat.id}>
-                {chat.uid != user.uid ? 
+                {chat.uid !== user.uid ? 
                     <div className="grid grid-rows-3 grid-flow-col">
                             <img className="row-span-3 col-span-1 rounded-full w-12 h-12" src={chat.profile_pic} alt="dm-profile" referrerPolicy="no-referrer" />
                                 <div className="row-span-3 col-span-11">
@@ -76,8 +77,8 @@ const MessageRoom = ({user}) => {
                 }
                 </div>
             ))}
-            <form onSubmit={handleSubmit} className="flex items-center justify-center md:w-screen gap-3 mt-3 fixed bottom-0 mb-16">
-                    <textarea value={msg} onChange={(e) => setMsg(e.target.value)} className="border-2 w-72 lg:w-96 h-16"></textarea>
+            <form onSubmit={handleSubmit} className="flex items-center justify-center md:w-screen gap-2 mt-3 fixed bottom-0 mb-3">
+                    <textarea value={msg} onChange={(e) => setMsg(e.target.value)} className="border-2 w-[80vw] md:w-96 h-16"></textarea>
                     <button className="py-3 bg-blue-500 w-14 h-16 rounded-md"><i className="far fa-paper-plane text-2xl"></i></button>
             </form>
         </div>

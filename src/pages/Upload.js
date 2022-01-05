@@ -1,26 +1,31 @@
 import { db, storage } from "../config/firebase";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
-import { useEffect, useState } from "react/cjs/react.development";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const Upload = ({user}) => {
 
-    const [phoroUrl, setPhotoUrl] = useState([]);
+    // const [phoroUrl, setPhotoUrl] = useState([]);
+    let photoData = [];
+    let photoCount = 0;
     const [progres, setProgres] = useState(0);
-    const [fileCount, setFileCount] = useState(null);
     const [caption, setCaption] = useState('');
-    const navigate = useNavigate();
 
-    const handleSubmit = async (e)  => {
+    const postsRef = collection(db, "posts");
+
+    const navigate = useNavigate();
+    const currentTime = Timestamp.now();
+
+    const handleSubmit = (e)  => {
         e.preventDefault();
         const photos = e.target[0].files;
-        setFileCount(photos.length);
+        photoCount = photos.length;
         for (let i = 0; i < photos.length; i++) {
-            await uploadFile(photos[i]);
+            uploadFile(photos[i]);
         }
     }
 
-    const uploadFile = async (photo) => {
+    const uploadFile = (photo) => {
 
         setProgres(0);
 
@@ -33,31 +38,52 @@ const Upload = ({user}) => {
         () => {
             getDownloadURL(uploadPhotoProcess.snapshot.ref)
             .then(photoUrl => {
-                setPhotoUrl(data => [...data, photoUrl]);
+                // setPhotoUrl(data => [...data, photoUrl]);
+                photoData = [...photoData, photoUrl];
+                uploadData();
             });
         })
     }
 
-    useEffect(() => {
-        if (fileCount === phoroUrl.length) {
-            uploadData();
+    function uploadData() {
+        if (photoData.length === photoCount) {
+            addDoc(postsRef, {
+                caption, 
+                photo: photoData,
+                createdAt: currentTime,
+                like:0,
+                profile_pic: user.photoURL,
+                uid: user.uid,
+                username: user.displayName
+        
+            }).then(() => {
+                navigate("/");
+            })
         }
-    }, [fileCount, phoroUrl])
-
-    const uploadData = async () => {
-        const postsRef = collection(db, "posts");
-        const currentTime = Timestamp.now();
-        await addDoc(postsRef, {
-            caption,
-            photo: phoroUrl,
-            createdAt: currentTime,
-            like: 0,
-            profile_pic: user.photoURL,
-            uid: user.uid,
-            username: user.displayName
-        });
-        navigate("/");
     }
+
+    // const uploadRequirement = {
+    //     caption, 
+    //     photo: phoroUrl,
+    //     createdAt: currentTime,
+    //     like:0,
+    //     profile_pic: user.photoURL,
+    //     uid: user.uid,
+    //     username: user.displayName
+
+    // }
+
+    // useEffect(() => {
+    //     if (fileCount === phoroUrl.length) {
+    //         const uploadData = async () => {
+    //             const postsRef = collection(db, "posts");
+                
+    //             await addDoc(postsRef, uploadRequirement);
+    //         }
+    //         uploadData();
+    //     }
+    // }, [fileCount, phoroUrl, uploadRequirement])
+
 
     return ( 
         <div className="min-h-[85vh] md:min-h-[80vh]">

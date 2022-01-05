@@ -3,34 +3,35 @@ import {collection, getDocs, query, where, orderBy, updateDoc, doc, addDoc} from
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ScrollView from "./ScrollView";
+import Footer from "./Footer"
 const Home = ({user, setMsg}) => {
 
     const [posts, setPosts] = useState([]);
     const [likes, setLikes] = useState([]);
     const [changes, setChanges] = useState(0);
-    const postsRef = query(collection(db, 'posts'), orderBy("createdAt", "desc"));
-    const likeRef = query(collection(db, 'likes'), where("uid", "==", `${user?.uid}`));
-
+    
     useEffect(() => {
+        const postsRef = query(collection(db, 'posts'), orderBy("createdAt", "desc"));
         getDocs(postsRef)
-            .then(snapshot => {
-                setPosts(snapshot.docs.map(doc => (
-                    {
-                        ...doc.data(),
-                        id: doc.id
-                    }
+        .then(snapshot => {
+            setPosts(snapshot.docs.map(doc => (
+                {
+                    ...doc.data(),
+                    id: doc.id
+                }
                 )))
             });
-    }, [changes]);
+        }, [changes]);
     useEffect(() => {
+        const likeRef = query(collection(db, 'likes'), where("uid", "==", `${user?.uid}`));
         getDocs(likeRef)
-            .then(snapshot => {
-                setLikes(snapshot.docs.map(likePost =>(
-                    {
-                        post_id: likePost.data().post_id
-                    }
-                )))
-            })
+        .then(snapshot => {
+            setLikes(snapshot.docs.map(likePost =>(
+                {
+                    post_id: likePost.data().post_id
+                }
+            )))
+        })
     }, [user, changes])
 
 
@@ -64,6 +65,7 @@ const Home = ({user, setMsg}) => {
             setMsg('');
         }, 1000);
     }
+
     return ( 
         <>
             {posts.map(post => (
@@ -89,6 +91,7 @@ const Home = ({user, setMsg}) => {
                     </div>
                 </div>
             ))}
+            <Footer user={user} />
         </>
      );
 }

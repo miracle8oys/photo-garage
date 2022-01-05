@@ -9,13 +9,13 @@ import {getStorage} from "firebase/storage";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyDcEGJKiodvHB3_gqRTBE47r3luU4c3HPM",
-    authDomain: "myphoto-gallery.firebaseapp.com",
-    projectId: "myphoto-gallery",
-    storageBucket: "myphoto-gallery.appspot.com",
-    messagingSenderId: "2369753344",
-    appId: "1:2369753344:web:5d2addde3d357cafeea3e5"
-  };
+  apiKey: "AIzaSyC9rQUUs9lCHVg8acUWfHOQZH2A658m7ZE",
+  authDomain: "photo-garage.firebaseapp.com",
+  projectId: "photo-garage",
+  storageBucket: "photo-garage.appspot.com",
+  messagingSenderId: "540679520729",
+  appId: "1:540679520729:web:cc7d2b6ff371fe095e59c8"
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -28,7 +28,6 @@ const storage = getStorage(app);
 
 const signInWithGoogle = () => {
   signInWithPopup(auth, provider).then(data => {
-      console.log(data.user.uid);
       setDoc(doc(db, "users", `${data.user.uid}`), {
           profile_pic: data.user.photoURL,
           username: data.user.displayName
