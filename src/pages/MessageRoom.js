@@ -50,7 +50,7 @@ const MessageRoom = ({user}) => {
     }, [message_id]);
 
     return ( 
-        <div className="min-h-[85vh] mb-20">
+        <div className="min-h-[80vh] md:min-h-[70vh] mb-20">
             {msgData.map(chat => (
                 <div key={chat.id}>
                 {chat.uid !== user.uid ? 

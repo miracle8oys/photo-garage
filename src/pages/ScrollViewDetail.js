@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRef } from "react";
 
-const ScrollView = ({photo}) => {
+const ScrollViewDetail = ({photo}) => {
     const [imageCount, setImageCount] = useState(0);
     const leftArrow = useRef();
     const rightArrow = useRef();
@@ -54,13 +54,13 @@ const ScrollView = ({photo}) => {
 
     return (
         <>
-            <div className="flex justify-center md:w-[45vw]">
+            <div className="flex justify-center">
                 <img onTouchEnd={e => handleTouch(e)} onTouchMove={(e) => setLastTouch(e.touches[0].clientX)} onTouchStart={(e) => setFirstTouch(e.touches[0].clientX)}  className=" md:w-[42vw] md:max-h-[90vh] block" src={`${photo[imageCount]}`} alt="content-display" />
-                <i ref={leftArrow} onClick={(handleLeftClick)} className="invisible md:visible fas fa-angle-double-left text-slate-100 md:text-3xl opacity-50 hover:opacity-100 my-32 absolute left-[14%] py-10"></i>
-                <i ref={rightArrow} onClick={(handleClick)} className="invisible md:visible fas fa-angle-double-right text-slate-100 md:text-3xl opacity-50 hover:opacity-100 my-32 absolute right-[46%] py-10"></i>
+                <i ref={leftArrow} onClick={(handleLeftClick)} className="invisible md:visible fas fa-angle-double-left text-slate-100 md:text-3xl opacity-50 hover:opacity-100 my-32 absolute left-[30%] py-10"></i>
+                <i ref={rightArrow} onClick={(handleClick)} className="invisible md:visible fas fa-angle-double-right text-slate-100 md:text-3xl opacity-50 hover:opacity-100 my-32 absolute right-[30%] py-10"></i>
             </ div>
             {photo.length > 1 &&
-                <div className="flex justify-center gap-1 my-1 md:w-[45vw]">
+                <div className="flex justify-center gap-1 my-1">
                     {photo.map((ph, i) => (
 
                         <i key={ph} className={`fas fa-circle ${imageCount === i ? 'text-blue-700' : ''}`}></i>
@@ -72,4 +72,4 @@ const ScrollView = ({photo}) => {
      );
 }
  
-export default ScrollView;
+export default ScrollViewDetail;

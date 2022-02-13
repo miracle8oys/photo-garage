@@ -46,16 +46,18 @@ const Comments = ({user, setMsg}) => {
 
     return ( 
         <div className="my-3 min-h-[83vh] md:min-h-[75vh]">
-            <div className="grid">
-                {comments.map(cmn => (
-                    <div key={cmn.id} className="inline-flex gap-2 mb-2">
-                        <img src={`${cmn.profile_pic}`} className="rounded-full w-12 h-12" alt="commen-profile" referrerPolicy="no-referrer" />
-                        <div>
-                            <p className="font-bold text-xl">@{cmn.username} <span className="font-medium">{cmn.msg}</span> </p>
-                            <p className="">{cmn.createdAt.toDate().toDateString('ID')}</p>
+            <div className="flex justify-center">
+                <div className="grid md:w-3/5">
+                    {comments.map(cmn => (
+                        <div key={cmn.id} className="inline-flex gap-2 mb-2">
+                            <img src={`${cmn.profile_pic}`} className="rounded-full w-12 h-12" alt="commen-profile" referrerPolicy="no-referrer" />
+                            <div>
+                                <p className="font-bold text-xl">@{cmn.username} <span className="font-medium">{cmn.msg}</span> </p>
+                                <p className="">{cmn.createdAt.toDate().toDateString('ID')}</p>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
             <form onSubmit={handleSubmit} className="flex items-center justify-center md:w-screen gap-3 mt-3 fixed bottom-0 mb-3">
                     <textarea value={userComment} onChange={(e) => setUserComment(e.target.value)} className="border-2 w-[80vw] md:w-96 h-16"></textarea>

@@ -2,8 +2,8 @@ import { collection, getDoc, doc, getDocs, query, where, orderBy } from "firebas
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { db } from "../config/firebase";
-import ScrollView from "./ScrollView";
 import Footer from "./Footer";
+import ScrollViewDetail from "./ScrollViewDetail";
 
 const UserPost = ({user}) => {
 
@@ -46,7 +46,7 @@ const UserPost = ({user}) => {
 
     const MODAL_STYLES = {
         position: 'fixed',
-        height: '100vh',
+        height: '110vh',
         width: '100vw',
         top: '50%',
         left: '50%',
@@ -59,34 +59,35 @@ const UserPost = ({user}) => {
 
     return ( 
         <>
-            <div className="min-h-[83vh] md:min-h-[80vh]">
-                {isOpen && 
-                    <div className="mt-16 md:mt-0" style={MODAL_STYLES}>
-                        <div className="pt-20 md:pt-0">
-                            <ScrollView photo={display} />
+            <div className="flex justify-center">
+                <div className="min-h-[83vh] md:min-h-[80vh] md:w-3/5">
+                    {isOpen && 
+                        <div className="mt-16 md:mt-0 py-20" style={MODAL_STYLES}>
+                            <div className="pt-20 md:pt-0">
+                                <ScrollViewDetail photo={display} />
+                            </div>
+                            <div className="sm:flex sm:justify-center">
+                                <p className="w-fit"><span className="font-bold">@{displayUsername}</span> {displayCaption}</p>
+                            </div>
+                            <div className="flex justify-center">
+                                <i onClick={() => setIsOpen(false)} className="far fa-times-circle text-3xl"></i>
+                            </div>
                         </div>
-                        <div className="sm:flex sm:justify-center">
-
-                            <p className="w-fit"><span className="font-bold">@{displayUsername}</span> {displayCaption}</p>
-                        </div>
-                        <div className="flex justify-center">
-                            <i onClick={() => setIsOpen(false)} className="far fa-times-circle text-3xl"></i>
+                    }
+                    <div className="flex items-center gap-10 mx-3">
+                        <img className="rounded-full w-12" src={postUser.profile_pic} alt="profile-preview" />
+                        <div>
+                            <p className="text-xl font-bold italic">@{postUser.username}</p>
+                            <p className="font-medium text-xl">{posts.length} Post</p>
                         </div>
                     </div>
-                }
-                <div className="flex items-center gap-10 mx-3">
-                    <img className="rounded-full w-12" src={postUser.profile_pic} alt="profile-preview" />
-                    <div>
-                        <p className="text-xl font-bold italic">@{postUser.username}</p>
-                        <p className="font-medium text-xl">{posts.length} Post</p>
+                    <div className="grid grid-cols-3 gap-1 mt-3">
+                        {posts.map(post => (
+                            <div className="col-span-1" key={post.id} onClick={() => handlePopUpDisplay(post.photo, postUser.username, post.caption)}>
+                                <img className="h-[8rem] w-[8rem] md:h-60 md:w-60" src={post.photo[0]} alt="detail-preview" />
+                            </div>
+                        ))}
                     </div>
-                </div>
-                <div className="grid grid-cols-3 gap-1 mt-3">
-                    {posts.map(post => (
-                        <div key={post.id} onClick={() => handlePopUpDisplay(post.photo, postUser.username, post.caption)}>
-                            <img className="min-h-[8rem] max-h-[9rem] md:max-h-96 md:w-auto" src={post.photo[0]} alt="detail-preview" />
-                        </div>
-                    ))}
                 </div>
             </div>
             <Footer user={user} />
