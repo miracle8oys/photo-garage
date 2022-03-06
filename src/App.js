@@ -43,26 +43,26 @@ function App() {
         <BrowserRouter>
         <div className="sticky top-0 bg-white">
           <div className="flex z-10 items-center mb-1 py-2 px-2 font-semibold rounded-md place-items-stretch">
-              <h1 className="flex-1 italic text-3xl"><Link to="/">PhotoGalerry</Link></h1>
+              <h1 className="flex-1 italic text-xl"><Link to="/">PhotoGalerry</Link></h1>
             <div className="flex gap-3 md:gap-8 items-center mt-1">
               <Link to="/upload">
-                <i className="far font-medium fa-plus-square text-3xl"></i>
+                <i className="far font-medium fa-plus-square text-xl"></i>
               </Link>
               <Link to="/activity">
-                <i className="far font-medium fa-heart text-3xl"></i>
+                <i className="far font-medium fa-heart text-xl"></i>
               </Link>
               <Link to="/message">
-                <i className="far font-medium fa-comment text-3xl"></i>
+                <i className="far font-medium fa-comment text-xl"></i>
               </Link>
               <Link to="/search">
-                  <i className="fas fa-search text-3xl md:inline hidden"></i>
+                  <i className="fas fa-search text-xl md:inline hidden"></i>
               </Link>
               <Link to="/settings" className="md:inline hidden">
                   {user &&
-                      <img className='rounded-full w-10 sticky' src={`${user.photoURL}`} alt="profile-pic" referrerPolicy="no-referrer" />
+                      <img className='rounded-full w-8 sticky' src={`${user.photoURL}`} alt="profile-pic" referrerPolicy="no-referrer" />
                   }
                   {!user && 
-                      <img className='rounded-full w-10 sticky' src="https://firebasestorage.googleapis.com/v0/b/photo-garage.appspot.com/o/24-248253_user-profile-default-image-png-clipart-png-download.png?alt=media&token=4ab19b20-84db-483d-8b21-27f21e0ff1ec" alt="profile-unauthenticated" />
+                      <img className='rounded-full w-8 sticky' src="https://firebasestorage.googleapis.com/v0/b/photo-garage.appspot.com/o/24-248253_user-profile-default-image-png-clipart-png-download.png?alt=media&token=4ab19b20-84db-483d-8b21-27f21e0ff1ec" alt="profile-unauthenticated" />
                   }
               </Link>
             </div>
@@ -70,7 +70,7 @@ function App() {
           <hr />
         </div>
           {!user && 
-            <div className="flex w-screen md:-mx-12 justify-center sticky top-14">
+            <div className="flex w-screen md:-mx-12 justify-center top-14">
               <button className='py-3 mx-2 bg-blue-500 w-28 rounded-md' onClick={handleLogin}>Login</button>
             </div>
           }

@@ -46,13 +46,14 @@ const UserPost = ({user}) => {
 
     const MODAL_STYLES = {
         position: 'fixed',
-        height: '110vh',
+        height: '100vh',
         width: '100vw',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         backgroundColor: '#FFF',
-        padding: '0.5rem',
+        padding: '2rem',
+        overflow: 'auto',
         zIndex: 1000
       }
 
@@ -62,7 +63,7 @@ const UserPost = ({user}) => {
             <div className="flex justify-center">
                 <div className="min-h-[83vh] md:min-h-[80vh] md:w-3/5">
                     {isOpen && 
-                        <div className="mt-16 md:mt-0 py-20" style={MODAL_STYLES}>
+                        <div className="mt-16 md:mt-0 py-20 grid justify-center" style={MODAL_STYLES}>
                             <div className="pt-20 md:pt-0">
                                 <ScrollViewDetail photo={display} />
                             </div>
@@ -75,16 +76,16 @@ const UserPost = ({user}) => {
                         </div>
                     }
                     <div className="flex items-center gap-10 mx-3">
-                        <img className="rounded-full w-12" src={postUser.profile_pic} alt="profile-preview" />
+                        <img className="rounded-full w-10" src={postUser.profile_pic} alt="profile-preview" />
                         <div>
-                            <p className="text-xl font-bold italic">@{postUser.username}</p>
-                            <p className="font-medium text-xl">{posts.length} Post</p>
+                            <p className="text-lg font-bold italic">@{postUser.username}</p>
+                            <p className="font-medium text-lg">{posts.length} Post</p>
                         </div>
                     </div>
                     <div className="grid grid-cols-3 gap-1 mt-3">
                         {posts.map(post => (
                             <div className="col-span-1" key={post.id} onClick={() => handlePopUpDisplay(post.photo, postUser.username, post.caption)}>
-                                <img className="h-[8rem] w-[8rem] md:h-60 md:w-60" src={post.photo[0]} alt="detail-preview" />
+                                <img className="h-[8rem] w-[8rem] md:h-60 md:w-60 object-cover" src={post.photo[0]} alt="detail-preview" />
                             </div>
                         ))}
                     </div>

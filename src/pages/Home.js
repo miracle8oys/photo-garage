@@ -73,18 +73,18 @@ const Home = ({user, setMsg}) => {
                 {posts.map(post => (
                     <div key={post.id} className="mb-3">
                         <Link to={`/${post.uid}`} className="flex items-center mt-1 mb-1 gap-2 md:mt-3 md:mx-5">
-                            <img className="w-10 rounded-full" src={post.profile_pic} alt="user-profile" referrerPolicy="no-referrer" />
-                            <h5 className="font-semibold text-2xl italic">@{post.username}</h5>
+                            <img className="w-8 rounded-full" src={post.profile_pic} alt="user-profile" referrerPolicy="no-referrer" />
+                            <h5 className="font-semibold text-xl italic">@{post.username}</h5>
                         </Link>
                         <div>
                             <ScrollView photo={post.photo} />
                         </div>
                         <div className="flex gap-3 md:mt-3 md:mx-5">
-                            {likes.some(e => e.post_id === post.id) ? <i className="fas fa-heart text-4xl text-red-700"></i> : <i onClick={() => handleLike(post.id, post.like, post.photo[0], post.uid)} className="far fa-heart text-4xl"></i>}
+                            {likes.some(e => e.post_id === post.id) ? <i className="fas fa-heart text-3xl text-red-700"></i> : <i onClick={() => handleLike(post.id, post.like, post.photo[0], post.uid)} className="far fa-heart text-3xl"></i>}
                             <Link to={`/comments/${post.id}`}>
-                                <i className="far fa-comment text-4xl"></i>
+                                <i className="far fa-comment text-3xl"></i>
                             </Link>
-                            <i onClick={() => handleCopy(post.uid)} className="far fa-paper-plane text-4xl"></i>
+                            <i onClick={() => handleCopy(post.uid)} className="far fa-paper-plane text-3xl"></i>
                         </div>
                             <p className="text-xl ml-3 font-semibold md:mt-3 md:mx-5">{post.like} likes</p>
                         <div className="md:mt-3 md:mx-5">

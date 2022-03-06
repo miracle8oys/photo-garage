@@ -63,14 +63,14 @@ const Message = ({user, setMsg}) => {
                             <Link to={`/message/${room.id}`} key={room.id}>
                                 {room.member[0] === user?.uid ? 
                                 <div className="flex gap-3 mb-2">
-                                    <img className="w-12 h-12 rounded-full" src={`${room.profile_pic[1]}`} alt="snipped-pic-user" />
+                                    <img className="w-10 h-10 rounded-full" src={`${room.profile_pic[1]}`} alt="snipped-pic-user" />
                                     <div>
                                         <p className="font-semibold">{room.username[1]}</p>
                                         <p className="w-fit font-semibold text-lg py-2 px-2 rounded-md bg-sky-300 max-w-[70vw]">{room.last_msg}</p>
                                     </div>
                                 </div> : 
                                 <div className="flex gap-3 mb-2">
-                                    <img className="w-12 h-12 rounded-full" src={`${room.profile_pic[0]}`} alt="snipped-pic-user" />
+                                    <img className="w-10 h-10 rounded-full" src={`${room.profile_pic[0]}`} alt="snipped-pic-user" />
                                     <div>
                                         <p className="font-semibold">{room.username[0]}</p>
                                         <p className="w-fit font-semibold text-lg py-2 px-2 rounded-md bg-sky-300 max-w-[70vw]">{room.last_msg}</p>
@@ -81,12 +81,12 @@ const Message = ({user, setMsg}) => {
                         ))}
                     </div>
                 }
-                <p className="my-2 text-2xl font-semibold pt-5">Recomendation : </p>
+                <p className="my-2 text-xl font-semibold pt-5">Recomendation : </p>
                 {users.map(user => (
                     <div className="flex justify-between items-center mr-20" key={user.id}>
                         <div className="flex items-center gap-3 mb-2">
-                            <img className="rounded-full w-12" src={`${user.profile_pic}`} alt="msg-profile" referrerPolicy="no-referrer" />
-                            <p className="text-xl font-semibold">{user.username}</p>
+                            <img className="rounded-full w-10" src={`${user.profile_pic}`} alt="msg-profile" referrerPolicy="no-referrer" />
+                            <p className="text-lg font-semibold">{user.username}</p>
                         </div>
                         <i onClick={() => createRoom(user.id, user.profile_pic, user.username)} className="far fa-comment-dots text-4xl"></i>
                     </div>
